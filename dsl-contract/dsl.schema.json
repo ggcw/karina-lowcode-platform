@@ -1,0 +1,73 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "低代码平台 DSL",
+  "oneOf": [
+    { "$ref": "#/definitions/form" },
+    { "$ref": "#/definitions/flow" }
+  ],
+  "definitions": {
+    "field": {
+      "type": "object",
+      "required": ["type", "key", "label"],
+      "properties": {
+        "type": {
+          "enum": ["text", "textarea", "number", "date", "select"]
+        },
+        "key": { "type": "string" },
+        "label": { "type": "string" },
+        "required": { "type": "boolean", "default": false },
+        "placeholder": { "type": "string" },
+        "defaultValue": { "type": ["string", "number", "boolean", "null"] },
+        "options": { "type": "array", "items": { "type": "string" } },
+        "min": { "type": "number" },
+        "max": { "type": "number" }
+      },
+      "additionalProperties": true
+    },
+    "form": {
+      "type": "object",
+      "required": ["type", "key", "fields"],
+      "properties": {
+        "type": { "const": "form" },
+        "key": { "type": "string" },
+        "name": { "type": "string" },
+        "fields": { "type": "array", "items": { "$ref": "#/definitions/field" } }
+      },
+      "additionalProperties": true
+    },
+    "branch": {
+      "type": "object",
+      "required": ["to"],
+      "properties": {
+        "if": { "type": "string" },
+        "else": { "type": "boolean" },
+        "to": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "node": {
+      "type": "object",
+      "required": ["id", "type"],
+      "properties": {
+        "id": { "type": "string" },
+        "type": { "enum": ["start", "end", "user_task", "exclusive_gateway"] },
+        "name": { "type": "string" },
+        "next": { "type": "string" },
+        "assignee": { "type": "string" },
+        "branches": { "type": "array", "items": { "$ref": "#/definitions/branch" } }
+      },
+      "additionalProperties": true
+    },
+    "flow": {
+      "type": "object",
+      "required": ["type", "key", "nodes"],
+      "properties": {
+        "type": { "const": "flow" },
+        "key": { "type": "string" },
+        "name": { "type": "string" },
+        "nodes": { "type": "array", "items": { "$ref": "#/definitions/node" } }
+      },
+      "additionalProperties": true
+    }
+  }
+}

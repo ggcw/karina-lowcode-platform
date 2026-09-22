@@ -1,0 +1,16 @@
+{
+  "type": "flow",
+  "key": "general_approval",
+  "name": "通用审批流程",
+  "nodes": [
+    { "id": "start", "type": "start", "next": "submit" },
+    { "id": "submit", "type": "user_task", "name": "提交申请", "next": "gate1" },
+    { "id": "gate1", "type": "exclusive_gateway", "branches": [
+      { "if": "amount > 1000", "to": "manager_approve" },
+      { "else": true, "to": "dept_approve" }
+    ]},
+    { "id": "dept_approve", "type": "user_task", "name": "部门审批", "next": "end" },
+    { "id": "manager_approve", "type": "user_task", "name": "经理审批", "next": "end" },
+    { "id": "end", "type": "end" }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "type": "form",
+  "key": "general_apply",
+  "name": "通用申请单",
+  "fields": [
+    { "type": "text", "key": "applicant", "label": "申请人", "required": true },
+    { "type": "text", "key": "title", "label": "申请事由", "required": true },
+    { "type": "select", "key": "category", "label": "申请类型", "options": ["请假", "报销", "采购", "其他"], "required": true },
+    { "type": "number", "key": "amount", "label": "金额", "min": 0 },
+    { "type": "date", "key": "apply_date", "label": "申请日期", "required": true },
+    { "type": "textarea", "key": "remark", "label": "备注" }
+  ]
+}
