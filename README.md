@@ -23,7 +23,7 @@
 - 数据契约：自研 DSL、JSON Schema、TypeScript
 - 后端：Node.js
 - 流程引擎：状态机（类 BPMN）
-- 存储：SQLite / PostgreSQL
+- 存储：SQLite
 
 ## 目录结构
 
