@@ -1,5 +1,5 @@
 {
-  "name": "ai-requirement-testcase-generator",
+  "name": "flow-engine",
   "version": "1.0.0",
   "description": "AI-driven requirement parsing and test case generation system for small software projects",
   "main": "src/index.ts",
