@@ -1,7 +1,7 @@
 {
   "name": "flow-engine",
   "version": "1.0.0",
-  "description": "AI-driven requirement parsing and test case generation system for small software projects",
+  "description": "低代码平台流程引擎：基于契约 DSL 的流程定义解析与执行",
   "main": "src/index.ts",
   "scripts": {
     "demo": "ts-node test/simple-flow.test.ts"

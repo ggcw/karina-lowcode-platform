@@ -1,26 +1,37 @@
-// simple-flow.test.ts 完整使用示例，对应你要的完整实例
-import {startFlow,runStep,parseRequirementToDSL,generateTestCase} from "./../src/index";
+// simple-flow.test.ts 完整使用示例
+import { startFlow, runStep } from "../src/index";
+import type { FlowSchema } from "../../contract/dsl-types";
 
-// 模拟用户输入的软件需求文本
-const userReq = "小型项目：用户提交表单，系统审核，审核完成流程结束";
+// 流程定义（契约 v0.1 DSL）：线性流转 + exclusive_gateway 条件分支
+const flow: FlowSchema = {
+    type: "flow",
+    key: "flow_001",
+    name: "审批流程示例",
+    nodes: [
+        { id: "n1", type: "start", name: "开始", next: "n2" },
+        { id: "n2", type: "user_task", name: "提交申请", assignee: "申请人", next: "n3" },
+        {
+            id: "n3", type: "exclusive_gateway", name: "金额判断",
+            branches: [
+                { if: "amount > 1000", to: "n4" },
+                { else: true, to: "n5" }
+            ]
+        },
+        { id: "n4", type: "user_task", name: "高级审批", assignee: "经理", next: "n5" },
+        { id: "n5", type: "end", name: "结束" }
+    ]
+};
 
-// 1.AI解析需求，自动得到流程DSL
-const dsl = parseRequirementToDSL(userReq);
-console.log("解析得到的流程定义：",dsl);
+// 1. 启动流程实例
+const inst = startFlow(flow);
+console.log("流程启动，当前节点：", inst.currentNodeId);
 
-// 2.启动流程实例
-const inst = startFlow(dsl);
-console.log("流程启动，当前节点：",inst.currentNodeId);
+// 2. 逐步执行（携带上下文，网关按条件分支）
+const inst2 = runStep(inst, flow, { amount: 5000 });
+console.log("推进一步，当前节点：", inst2.currentNodeId);
 
-// 3.一步步执行流程
-const inst2 = runStep(inst,dsl);
-console.log("推进一步，当前节点：",inst2.currentNodeId);
-const inst3 = runStep(inst2,dsl);
-console.log("再推进一步，当前节点：",inst3.currentNodeId);
+const inst3 = runStep(inst2, flow, { amount: 5000 });
+console.log("再推进一步，当前节点：", inst3.currentNodeId);
 
-// 4.自动生成测试用例
-const testCases = generateTestCase(dsl);
-console.log("自动生成测试用例：");
-testCases.forEach((c,idx)=>{
-  console.log(`${idx+1}. ${c}`);
-})
+const inst4 = runStep(inst3, flow, { amount: 5000 });
+console.log("继续推进，当前节点：", inst4.currentNodeId, "状态：", inst4.status);
