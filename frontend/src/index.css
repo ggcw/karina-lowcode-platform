@@ -1,0 +1,271 @@
+:root {
+  --bg: #f5f6f8;
+  --panel: #ffffff;
+  --border: #e2e5ea;
+  --text: #1f2329;
+  --muted: #8a919c;
+  --accent: #3370ff;
+  --accent-bg: #eef3ff;
+  --danger: #d8493c;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, "Segoe UI", "Microsoft YaHei", "PingFang SC", sans-serif;
+  color: var(--text);
+  background: var(--bg);
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+}
+
+.topbar h1 {
+  font-size: 16px;
+  margin: 0;
+}
+
+.tools button {
+  margin-left: 8px;
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: #fff;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.tools button:hover:not(:disabled) {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.tools button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 200px 1fr 340px;
+  gap: 12px;
+  padding: 12px;
+  flex: 1;
+  min-height: 0;
+}
+
+.palette-col,
+.canvas-col,
+.right-col {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.palette-header,
+.canvas-header,
+.dsl-header {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.palette-col {
+  overflow-y: auto;
+}
+
+.palette-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  margin: 8px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: grab;
+  background: #fff;
+  user-select: none;
+}
+
+.palette-item:hover {
+  border-color: var(--accent);
+  background: var(--accent-bg);
+}
+
+.palette-dragging {
+  opacity: 0.4;
+}
+
+.canvas-col {
+  overflow: hidden;
+}
+
+.canvas {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: background 0.15s;
+}
+
+.canvas-over {
+  background: #f0f5ff;
+  outline: 2px dashed var(--accent);
+  outline-offset: -4px;
+}
+
+.hint {
+  color: var(--muted);
+  text-align: center;
+  margin-top: 40px;
+  font-size: 13px;
+}
+
+.field-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.field-row:hover {
+  border-color: var(--accent);
+}
+
+.field-selected {
+  border-color: var(--accent);
+  background: var(--accent-bg);
+}
+
+.field-dragging {
+  opacity: 0.5;
+}
+
+.drag-handle {
+  cursor: grab;
+  color: var(--muted);
+  padding: 0 2px;
+}
+
+.field-type {
+  font-size: 11px;
+  color: var(--accent);
+  background: var(--accent-bg);
+  border-radius: 4px;
+  padding: 2px 6px;
+  white-space: nowrap;
+}
+
+.field-label {
+  flex: 1;
+  font-size: 14px;
+}
+
+.field-key {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.icon-btn {
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  font-size: 16px;
+  cursor: pointer;
+  padding: 0 4px;
+}
+
+.icon-btn:hover {
+  color: var(--danger);
+}
+
+.right-col {
+  overflow-y: auto;
+}
+
+.panel {
+  padding: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.panel h3 {
+  font-size: 13px;
+  margin: 12px 0 8px;
+}
+
+.panel label {
+  display: block;
+  font-size: 12px;
+  color: var(--muted);
+  margin: 10px 0 4px;
+}
+
+.panel input[type="text"],
+.panel input[type="number"],
+.panel select,
+.panel textarea {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 13px;
+  font-family: inherit;
+}
+
+.panel input[type="checkbox"] {
+  margin-right: 6px;
+}
+
+.panel .danger {
+  margin-top: 14px;
+  width: 100%;
+  padding: 7px;
+  border: 1px solid var(--danger);
+  color: var(--danger);
+  background: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.panel .danger:hover {
+  background: #fff5f4;
+}
+
+.dsl-pre {
+  margin: 0;
+  padding: 12px;
+  font-family: "SFMono-Regular", Consolas, "Courier New", monospace;
+  font-size: 12px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-all;
+  color: #333;
+  background: #fafbfc;
+}
